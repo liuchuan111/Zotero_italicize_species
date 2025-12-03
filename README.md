@@ -7,7 +7,7 @@ This is the updated `README.md` content, incorporating the new features, simplif
 This repository presents a streamlined procedure to automatically *italicize* species names (or any other word) in the titles of your documents in your Zotero library.
 
 ---
-## Ì†ΩÌ≤° Community Fork Notice
+## Community Fork Notice
 
 This repository is a **community-maintained fork** of the original Zotero italicization script by LPDagallier/Zotero_italicize_species.
 
@@ -16,7 +16,7 @@ Since the original project appears inactive, this fork provides crucial **stabil
 
 ---
 
-## Ì†ΩÌª†Ô∏è Key Optimizations in This Fork
+##  Key Optimizations in This Fork
 
 This version of the script includes crucial logic enhancements to improve stability and usability:
 
@@ -25,7 +25,7 @@ This version of the script includes crucial logic enhancements to improve stabil
 
 ---
 
-## Ì†ΩÌ≤° Introduction
+##  Introduction
 
 [Zotero](https://www.zotero.org/) is a powerful bibliography management tool. However, correctly formatting scientific names often requires manual effort:
 
@@ -37,7 +37,7 @@ Zotero uses HTML tags (**`\<i>`** and **`\<i/>`**) for rich text formatting. Thi
 
 ---
 
-## Ì†ΩÌ∫Ä The Step-by-Step Procedure
+##  The Step-by-Step Procedure
 
 The process is fast and only requires interacting with the script variables.
 
@@ -58,7 +58,7 @@ That's it! The script will first clean up any entries in `toDelete`, and then sa
 
 ---
 
-## Ì†ΩÌ¥é Technical Explanations
+##  Technical Explanations
 
 ### 1. Robust Italicization Logic
 
@@ -84,7 +84,7 @@ The script now executes a full **cleaning pass** before adding new italics:
 
 ---
 
-## Ì†ΩÌ∑ÇÔ∏è PDF File Renaming
+##  PDF File Renaming
 
 If you use Zotero's default "Rename File from Parent Metadata" function, Zotero will correctly omit the HTML tags in the filename.
 
@@ -94,7 +94,7 @@ If you are using the **[Zotfile](http://zotfile.com/)** extension, you can follo
 
 ---
 
-## Ì†ΩÌ¥ó Ressources
+##  Ressources
 
 -   [https://www.zotero.org/support/dev/client_coding/javascript_api#batch_editing](https://www.zotero.org/support/dev/client_coding/javascript_api#batch_editing)
 -   See also [Mazospega](https://github.com/IdoBar/Mazospega) that also intends to italicize species names in Zotero, but in a different way (with Python and interface).
