@@ -1,60 +1,100 @@
-# :sparkles: Italicize genus and species names in Zotero :sparkles:
-This repository present a procedure to automatically _italicize_ the species names (or any other word) in the titles of your documents in the Zotero library. 
+This is the updated `README.md` content, incorporating the new features, simplifying the procedure, and adding a note about community maintenance.
 
-## Introduction
-[Zotero](https://www.zotero.org/) is a very useful and powerful tool for managing bibliography.
-However, when the titles of the documents contain a genus or a species name, many of us struggle because:
-- the nomenclature standards require that genus and species to be written in italic
-- depending on how the document is imported, the genus and/or species name are rarely already in italic
-- it's boring and fastidious to go through the references section of a documents to manually italicize all the genus and species names 
+***
 
-The way Zotero manages the [rich text formating](https://www.zotero.org/support/kb/rich_text_bibliography) is with HTML tags. So to italicize a part of the title, it needs to be enclosed by the following HTML tags: **\<i>** Genus species  **\<i/>**. So one solution is to go across all the references items in our database and add manually theses tags in the titles, but this is long and tedious.
+# :sparkles: Italicize Genus and Species Names in Zotero (Community Fork) :sparkles:
 
-But lucky for us, since the release of [Zotero 5.0.73](https://www.zotero.org/support/5.0_changelog), it is possible to directly script into Zotero.
-So here is a script for automatically add the \<i> html tags around a list of user define genera and species names. 
+This repository presents a streamlined procedure to automatically *italicize* species names (or any other word) in the titles of your documents in your Zotero library.
 
-## The step-by-step procedure
+---
+## Ì†ΩÌ≤° Community Fork Notice
 
-- Backup your Zotero data (just in case; it's pretty simple, see [here](https://www.zotero.org/support/zotero_data#backing_up_your_zotero_data) how to do that)
-- Open the [zotero_italicize_species.js](./zotero_italicize_species.js) script in any text or script editor (Gedit, Notepad).  
-- In the `toModify` variable, insert the list of words (or character strings) you want to have in italic. Each character string is enclosed by quotation marks ("), seprarated by a comma (,).  
-**Important**: in the character strings, you have to separate the genus and the species, e.g. `var toModify = ["Quercus", "pubescens", "Homo", "sapiens"];` and **not**  `var toModify = ["Quercus pubescens", "Homo sapiens"];` (see the explanation below).
-- Select the whole script and copy it.
-- Open Zotero, in the menu, go to Tools > Developper > Run JavaScript.
-- Paste the script into the code box of the Run JavaScript window, and tick the 'Run as async function' box.
-- Click Run or press Ctrl + R.
+This repository is a **community-maintained fork** of the original Zotero italicization script by LPDagallier/Zotero_italicize_species.
 
-That's it! Enjoy the time you saved from manually editing all these titles ;)
+Since the original project appears inactive, this fork provides crucial **stability and usability enhancements**, including preventing nested italic tags and adding a dedicated cleanup utility. Users are encouraged to use this version for continued maintenance and bug fixes.
+---
 
-## Explanations
-The script will go through every character string in the `toModify` variable with regular expression to add HTML tags around the character strings.
+---
 
-The `toModify` variable has to contain every single character string separated from each other.  
-Depending on the documents you have in your database, genus and species names can occur in different ways. In some titles you will have only the genus name, e.g. _Quercus_, and in other titles you will have both genus and specific epithet, e.g. _Quercus pubescens_:
-- if your `toModify` variable only contains genus names (`var toModify = ["Quercus"];`), the specific epithet will not be italicized (ending up with "_Quercus_ pubescens");
-- if it only contains the genus + species name (`var toModify = ["Quercus pubescens"];`), then all the occurrences of "Quercus pubescens" will be italicized, but not the occurrences of "Quercus" alone;
-- and if it contains both (`var toModify = ["Quercus pubescens", "Quercus"];`), then all the "Quercus" in the occurrences of "Quercus pubescens" will be de italicized 2 times (2 HTML tags: \<i>\<i>Quercus\<i/> pubescens\<i/>), which will "cancel" the italic formatting around the genus name (ending up with "Quercus _pubescens_").
+## Ì†ΩÌª†Ô∏è Key Optimizations in This Fork
 
-That is why the `toModify` variable has to contain genus and species names separated (`var toModify = ["Quercus", "pubescens"];`). Note that this will add a HTML tag around each string (\<i>Quercus\<i/> \<i>pubescens\<i/>), which might seem a bit messed up. That is why the script contains an extra step of cleaning (see line 36) that removes all the "\<i/> \<i>" patterns (thus transforming  \<i>Quercus\<i/> \<i>pubescens\<i/> into \<i>Quercus pubescens\<i/>, that is _Quercus pubescens_). However, in case you still want to put the full Genus species string in the toModify variable, the script will still work. It is even recommended in case the genus name or species epithet is ambiguous with non-Latin language, e.g. you might want to put "Gorilla gorilla" instead of "Gorilla" alone, otherwise all the occurrences of Gorilla as the common name will be italicized.
+This version of the script includes crucial logic enhancements to improve stability and usability:
 
-Note that the script is designed such that substrings are not italicized, e.g. if you have "Annona" in your `toModify` variable, "_Annona_" will be italicized but not "Annonaceae", although "Annonaceae" does contain the substring "Annona".
+1.  **Nesting Prevention:** The script now features an advanced **pre-check** to prevent the creation of incorrect nested HTML tags (e.g., `<i><i>Genus</i> species</i>`), ensuring clean and correct formatting even when running the script multiple times.
+2.  **Cleanup Utility:** A new variable, `toDelete`, allows users to easily specify words or phrases to **remove** existing incorrect or redundant italic tags (`<i>` and `</i>`).
 
-## PDF file renaming
+---
 
-If you use the function _Rename File from Parent Metadata_ (default Zotero renaming function), Zotero will automatically not include the HTML tag in the .pdf file names.
+## Ì†ΩÌ≤° Introduction
 
-However, if you are using the [Zotfile](http://zotfile.com/) extension for renaming, it will include the HTML tags in the file name.  
+[Zotero](https://www.zotero.org/) is a powerful bibliography management tool. However, correctly formatting scientific names often requires manual effort:
 
-To get rid of the tags in the filename with Zotfile, there is a trick. You first have to add a [user defined wildcard](http://zotfile.com/index.html#user-defined-wildcards) for the title:
-- Go to Edit > Preferences > Advanced > General
-- Go to Config Editor > I accept the risk!
-- Change the `extensions.zotfile.wildcards.user` value to `{"1": {"field": "title", "operations":[{"function":"replace","regex": "(\\<.*\\>\\b)|(\\b\\<.*\\>)", "replacement": ""}]}}`  
-You have now defined the new wildcard `%1` for Zotfile file renaming.
-- Now go to Tools > ZotFile Preferences > Renaming Rules
-- Use `%1` wildcard instead of `%t` wildcard for renaming the title, e.g. `{%a} - {%y} - {%1}` will rename the files like "Author - YEAR - Title" with the title removed from any HTML tag.
+-   Nomenclature standards require genus and species names to be in italic.
+-   Titles imported into Zotero rarely include the required italic formatting.
+-   Manually applying italics to titles is tedious.
 
+Zotero uses HTML tags (**`\<i>`** and **`\<i/>`**) for rich text formatting. This script automates the process of adding these tags around a user-defined list of scientific names.
 
-## Ressources
-- https://www.zotero.org/support/dev/client_coding/javascript_api#batch_editing
-- Note that this could also be probably achieved in R using Zotero API (see e.g. https://github.com/mbojan/zoterro, https://github.com/giocomai/zoteror), although no ready-to-use function for modifying existing items has been implemented yet 
-- See also [Mazospega](https://github.com/IdoBar/Mazospega) that also intends to italicize species names in Zotero, but in a different way (with Python and interface).
+---
+
+## Ì†ΩÌ∫Ä The Step-by-Step Procedure
+
+The process is fast and only requires interacting with the script variables.
+
+1.  **Backup your Zotero data** (Always a safe practice, see instructions [here](https://www.zotero.org/support/zotero_data#backing_up_your_zotero_data)).
+2.  **Open the Script:** Open the `zotero_italicize_species.js` script in any text editor (Gedit, Notepad, VS Code).
+3.  **Define Words to Italicize (`toModify`):**
+    * In the `toModify` variable, list all words (genera, species, or other terms) you want italicized.
+    * **Crucially:** Separate the genus and species name (e.g., `["Quercus", "pubescens"]` **NOT** `["Quercus pubescens"]`).
+4.  **Define Words to Clean Up (`toDelete` - New!):**
+    * In the new `toDelete` variable, list any words or phrases that were **incorrectly italicized** in a previous run or manually added, and you wish to remove the `<i>` tags from (e.g., `["Rockfish", "Marbled"]`).
+5.  **Run the Script:**
+    * Select the entire script and copy it.
+    * Open Zotero, go to **Tools** > **Developer** > **Run JavaScript**.
+    * Paste the script into the code box, and **tick the 'Run as async function' box**.
+    * Click **Run** or press **Ctrl + R**.
+
+That's it! The script will first clean up any entries in `toDelete`, and then safely apply new italics based on the `toModify` list, skipping any terms already formatted.
+
+---
+
+## Ì†ΩÌ¥é Technical Explanations
+
+### 1. Robust Italicization Logic
+
+The script iterates through every character string in the `toModify` variable and uses regular expressions with word boundaries (`\b`) to wrap the word with HTML tags.
+
+The reason you must keep genus and species names separated (e.g., `["Quercus", "pubescens"]`) is to handle various title formats where only the genus, or the full binomial, might appear.
+
+**The Stability Improvement:**
+The updated script includes a core check that asks: **"Is this word/phrase already wrapped in `<i>` or `</i>`?"**
+
+* If **Yes**, the script skips the replacement, effectively preventing the formation of double tags (`<i><i>...</i></i>`).
+* If **No**, the script safely applies the `<i>...</i>` tags.
+
+This eliminates the complex, error-prone post-processing cleanup step used in older versions of this script.
+
+### 2. The Cleanup Utility (`toDelete`)
+
+The script now executes a full **cleaning pass** before adding new italics:
+
+* It searches for items containing any word listed in `toDelete`.
+* It uses robust replacement patterns to remove all forms of `<i>` tags associated with that word (whether `<i>Word</i>` or parts of a split italic phrase like `<i>Word One</i> <i>Word Two</i>`).
+* This feature is designed for bulk correction of titles.
+
+---
+
+## Ì†ΩÌ∑ÇÔ∏è PDF File Renaming
+
+If you use Zotero's default "Rename File from Parent Metadata" function, Zotero will correctly omit the HTML tags in the filename.
+
+If you are using the **[Zotfile](http://zotfile.com/)** extension, you can follow the steps in the original documentation below to define a user wildcard (`%1`) that removes HTML tags before renaming.
+
+*(The original Zotfile configuration steps remain valid here.)*
+
+---
+
+## Ì†ΩÌ¥ó Ressources
+
+-   [https://www.zotero.org/support/dev/client_coding/javascript_api#batch_editing](https://www.zotero.org/support/dev/client_coding/javascript_api#batch_editing)
+-   See also [Mazospega](https://github.com/IdoBar/Mazospega) that also intends to italicize species names in Zotero, but in a different way (with Python and interface).
