@@ -12,6 +12,7 @@ This repository presents a streamlined procedure to automatically *italicize* sp
 This repository is a **community-maintained fork** of the original Zotero italicization script by LPDagallier/Zotero_italicize_species.
 
 Since the original project appears inactive, this fork provides crucial **stability and usability enhancements**, including preventing nested italic tags and adding a dedicated cleanup utility. Users are encouraged to use this version for continued maintenance and bug fixes.
+
 ---
 
 ---
