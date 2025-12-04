@@ -34,7 +34,7 @@ This version of the script includes crucial logic enhancements to improve stabil
 -   Titles imported into Zotero rarely include the required italic formatting.
 -   Manually applying italics to titles is tedious.
 
-Zotero uses HTML tags (**`\<i>`** and **`\<i/>`**) for rich text formatting. This script automates the process of adding these tags around a user-defined list of scientific names.
+Zotero uses HTML tags (**``<i>``** and **``</i>``**) for rich text formatting. This script automates the process of adding these tags around a user-defined list of scientific names.
 
 ---
 
